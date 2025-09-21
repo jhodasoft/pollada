@@ -128,5 +128,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Configuración de seguridad para producción
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_DOMAIN = '.up.railway.app'
 CSRF_COOKIE_DOMAIN = '.up.railway.app'
