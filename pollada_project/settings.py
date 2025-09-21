@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-wl^a2-dzp#ut1kmwg9kv*^-!d)3oeh4spx@45u#)e9p_3p-#43
 #DEBUG = True #para desarrollo
 DEBUG = os.environ.get('DEBUG', 'False') == 'True' #para produccion
 
-ALLOWED_HOSTS = ['nombre-de-tu-app.up.railway.app']
+ALLOWED_HOSTS = ['pollada-production.up.railway.app']
 
 
 # Application definition
