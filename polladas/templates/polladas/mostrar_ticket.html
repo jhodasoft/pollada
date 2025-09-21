@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Ticket</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; }
+        .ticket-container { max-width: 400px; margin: auto; padding: 20px; border: 2px dashed #333; border-radius: 8px; }
+        h1 { color: #4CAF50; }
+        p { font-size: 1.2em; }
+        .codigo { font-size: 2em; font-weight: bold; margin: 20px 0; color: #D9534F; }
+        #qr-code img { max-width: 100%; height: auto; display: block; margin: 20px auto; }
+        .actions-container button { 
+            display: block; 
+            width: 100%; 
+            padding: 10px; 
+            margin: 10px 0; 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        .actions-container .secondary-btn {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket-container">
+        <h1>¡Ticket de Pollada!</h1>
+        <p>Cliente: {{ ticket.cliente.nombre }}</p>
+        <p>Parte del Pollo: {{ ticket.parte_pollo.nombre }}</p>
+        <p>Tu código de canje es:</p>
+        <div class="codigo">{{ ticket.codigo }}</div>
+
+        <div id="qr-code">
+            <img src="data:image/png;base64,{{ qr_data }}" alt="Código QR del ticket">
+        </div>
+        
+        <p>¡Gracias por tu compra!</p>
+    </div>
+    
+    <div class="actions-container">
+        <button onclick="downloadTicket()">Descargar Ticket</button>
+        <button onclick="window.location.href='{% url 'registrar_cliente' %}'">Pedir otro Ticket</button>
+        <button class="secondary-btn" onclick="window.location.href='about:blank'">Salir</button>
+    </div>
+
+    <script>
+        // Función para descargar la imagen del ticket (código QR y datos)
+        function downloadTicket() {
+            html2canvas(document.querySelector(".ticket-container")).then(canvas => {
+                var link = document.createElement('a');
+                link.download = 'ticket_pollada.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
