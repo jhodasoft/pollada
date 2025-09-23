@@ -83,8 +83,16 @@
     
     <div class="actions">
         <button id="download-btn" data-client-name="{{ ticket.cliente.nombre }}">Descargar Ticket</button>
-        <button id="new-ticket-btn" data-url="{% url 'registrar_cliente' %}">Pedir otro Ticket</button>
-        <!-- <button id="exit-btn" class="secondary-btn" data-url="{% url 'panel_principal' %}">Volver al Panel Principal</button> -->
+        <button id="new-ticket-btn" data-url="{% url 'polladas:registrar_cliente' %}">Pedir otro Ticket</button>
+        
+         {% if user.is_authenticated and not ticket.canjeado %}
+            <form action="{% url 'polladas:canjear_ticket' codigo=ticket.codigo %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="secondary-btn">Canjear Ticket</button>
+            </form>
+        {% elif user.is_authenticated and ticket.canjeado %}
+            <p>Este ticket ya fue canjeado.</p>
+        {% endif %}
     </div>
     
 

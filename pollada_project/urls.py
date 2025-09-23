@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('polladas/', include('polladas.urls')),  # <-- Agrega esta línea
+    path('accounts/', include('django.contrib.auth.urls')), # Añade esta línea
+    path('polladas/', include('polladas.urls', namespace='polladas')),
 ]
