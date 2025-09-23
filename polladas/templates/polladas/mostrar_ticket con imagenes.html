@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu Ticket de Pollada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Azul claro para un fondo festivo */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .ticket-container {
+            width: 700px;
+            height: 250px;
+            background-color: white;
+            border: 5px solid #ff4500; /* Borde de color naranja */
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            display: flex; /* Contenedor principal para el diseño horizontal */
+            overflow: hidden;
+            position: relative;
+        }
+        .ticket-details-left {
+            flex: 1;
+            padding: 20px;
+            text-align: left;
+            position: relative;
+        }
+        .ticket-visuals-right {
+            flex: 1;
+            background-color: #ff6347; /* Rojo coral */
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .ticket-title {
+            font-size: 2em;
+            color: #d82c2c;
+            margin: 0;
+            font-weight: 900;
+        }
+        .ticket-subtitle {
+            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .info-item {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .ticket-code {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+        .qr-code img {
+            max-width: 120px;
+            height: auto;
+            border: 2px solid #333;
+            margin-bottom: 10px;
+        }
+        .images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .images img {
+            height: 70px; /* Controla la altura de las imágenes de cerveza y pollo */
+            width: auto;
+        }
+        .footer-text {
+            font-size: 0.8em;
+            margin-top: 15px;
+        }
+        .cut-line {
+            position: absolute;
+            top: 0;
+            left: 50%; /* Centra la línea de corte */
+            height: 100%;
+            border-left: 2px dashed #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket-container">
+        <div class="ticket-details-left">
+            <h1 class="ticket-title">GRAN POLLADA</h1>
+            <p class="ticket-subtitle">¡Tu Ticket de Ración!</p>
+            
+            <div class="info-item"><strong>Cliente:</strong> {{ ticket.cliente.nombre }}</div>
+            <div class="info-item"><strong>Teléfono:</strong> {{ ticket.cliente.telefono }}</div>
+            <div class="info-item"><strong>Parte:</strong> {{ ticket.parte_pollo.nombre }}</div>
+            <div class="info-item"><strong>Precio:</strong> S/ {{ ticket.parte_pollo.precio }}</div>
+
+            {% if ticket.cliente.tipo_pedido == 'delivery' %}
+            <div class="info-item" style="color: #d9534f; font-weight: bold;">
+                PEDIDO PARA DELIVERY
+            </div>
+            <div class="info-item"><strong>Dirección:</strong> {{ ticket.cliente.direccion }}</div>
+            <div class="info-item"><strong>Referencia:</strong> {{ ticket.cliente.referencia }}</div>
+            {% endif %}
+        </div>
+
+        <div class="cut-line"></div>
+
+        <div class="ticket-visuals-right">
+            <div class="images">
+                <img src="{% static 'img/cervezas.png' %}" alt="Cervezas">
+                <img src="{% static 'img/pollada.png' %}" alt="Pollada">
+            </div>
+            <div class="qr-code">
+                <img src="data:image/png;base64,{{ qr_data }}" alt="Código QR de tu ticket">
+            </div>
+            <p class="ticket-code">CÓDIGO: {{ ticket.codigo }}</p>
+            <p class="footer-text">Presenta este ticket para canjear tu pedido.</p>
+        </div>
+    </div>
+</body>
+</html>

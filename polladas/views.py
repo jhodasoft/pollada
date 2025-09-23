@@ -13,22 +13,34 @@ import qrcode
 import base64
 from io import BytesIO
 
+# polladas/views.py
 def registrar_cliente(request):
     if request.method == 'POST':
         form = ClienteForm(request.POST)
         if form.is_valid():
             nombre = form.cleaned_data['nombre']
             telefono = form.cleaned_data['telefono']
+            tipo_pedido = form.cleaned_data['tipo_pedido']
+            
+            # Captura la dirección y referencia si existen en el formulario
+            direccion = form.cleaned_data.get('direccion')
+            referencia = form.cleaned_data.get('referencia')
 
-            # Intentar obtener el cliente existente o crearlo si no existe
             cliente, created = Cliente.objects.get_or_create(
                 telefono=telefono,
-                defaults={'nombre': nombre}
+                defaults={
+                    'nombre': nombre,
+                    'tipo_pedido': tipo_pedido,
+                    'direccion': direccion,
+                    'referencia': referencia
+                }
             )
-            
-            # Si el cliente ya existía, pero el nombre es diferente, se puede actualizar
-            if not created and cliente.nombre != nombre:
+
+            if not created:
                 cliente.nombre = nombre
+                cliente.tipo_pedido = tipo_pedido
+                cliente.direccion = direccion
+                cliente.referencia = referencia
                 cliente.save()
 
             return redirect('seleccionar_pollo', cliente_id=cliente.id)
@@ -36,6 +48,30 @@ def registrar_cliente(request):
         form = ClienteForm()
 
     return render(request, 'polladas/registrar_cliente.html', {'form': form})
+
+# def registrar_cliente(request):
+#     if request.method == 'POST':
+#         form = ClienteForm(request.POST)
+#         if form.is_valid():
+#             nombre = form.cleaned_data['nombre']
+#             telefono = form.cleaned_data['telefono']
+#             tipo_pedido = form.cleaned_data['tipo_pedido'] # ¡Captura el nuevo dato!
+
+#             cliente, created = Cliente.objects.get_or_create(
+#                 telefono=telefono,
+#                 defaults={'nombre': nombre, 'tipo_pedido': tipo_pedido}
+#             )
+
+#             if not created:
+#                 cliente.nombre = nombre
+#                 cliente.tipo_pedido = tipo_pedido
+#                 cliente.save()
+
+#             return redirect('seleccionar_pollo', cliente_id=cliente.id)
+#     else:
+#         form = ClienteForm()
+
+#     return render(request, 'polladas/registrar_cliente.html', {'form': form})
 
 def seleccionar_pollo(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
@@ -155,43 +191,55 @@ def buscar_tickets_cliente(request):
     return render(request, 'polladas/buscar_tickets_cliente.html', context)
 
 def ver_reportes(request):
-    # Obtener el total de tickets vendidos (pagados)
-    tickets_vendidos = Ticket.objects.filter(pagado=True).count()
-
-    # Obtener el total de tickets canjeados
-    tickets_canjeados = Ticket.objects.filter(canjeado=True).count()
-
-    # Calcular el dinero recaudado de los tickets pagados
+    # Calcula el dinero total recaudado de los tickets que han sido pagados
     dinero_recaudado = Ticket.objects.filter(pagado=True).aggregate(
         total=Sum('parte_pollo__precio')
     )['total'] or 0
 
-    # Obtener la lista de tickets no pagados
-    tickets_no_pagados = Ticket.objects.filter(pagado=False).order_by('cliente__nombre')
-
-    # Calcular el dinero pendiente de cobro
+    # Calcula el dinero pendiente de los tickets que no han sido pagados
     dinero_pendiente = Ticket.objects.filter(pagado=False).aggregate(
         total=Sum('parte_pollo__precio')
     )['total'] or 0
 
-    # Obtener las ventas por cada parte del pollo
-    ventas_por_parte = ParteDelPollo.objects.annotate(
-        total_vendido=Count('ticket', filter=Q(ticket__pagado=True))
-    ).order_by('-total_vendido')
+    # Calcula el total de tickets vendidos (pagados y no pagados)
+    tickets_vendidos = Ticket.objects.filter(pagado=True).count()
 
-    # Obtener las partes más populares
+    # Calcula los tickets canjeados (sin importar si se pagaron)
+    tickets_canjeados = Ticket.objects.filter(canjeado=True).count()
+
+    # Total de tickets de Delivery vendidos (pagados)
+    pedidos_delivery = Ticket.objects.filter(cliente__tipo_pedido='delivery',pagado=True).count()
+
+    # Tickets de Delivery vendidos que están pendientes de canjear
+    delivery_pendientes = Ticket.objects.filter(
+        cliente__tipo_pedido='delivery',
+        canjeado=False,
+        pagado=True
+    ).select_related('cliente', 'parte_pollo').order_by('cliente__nombre')
+
+    # Ventas por parte del pollo
+    ventas_por_parte = ParteDelPollo.objects.annotate(
+        total_vendido=Count('ticket')
+    ).order_by('nombre')
+
+    # Tickets pendientes de pago (sin importar el tipo de pedido)
+    tickets_no_pagados = Ticket.objects.filter(pagado=False).select_related('cliente', 'parte_pollo')
+
+    # Partes más populares
     partes_populares = ParteDelPollo.objects.annotate(
-        total_vendido=Count('ticket', filter=Q(ticket__pagado=True))
+        total_vendido=Count('ticket')
     ).order_by('-total_vendido')[:3]
 
     context = {
+        'dinero_recaudado': dinero_recaudado,
+        'dinero_pendiente': dinero_pendiente,
         'tickets_vendidos': tickets_vendidos,
         'tickets_canjeados': tickets_canjeados,
-        'dinero_recaudado': dinero_recaudado, # <-- Agrega esta línea
-        'dinero_pendiente': dinero_pendiente, # <-- Agrega esta línea
-        'tickets_no_pagados': tickets_no_pagados,
+        'pedidos_delivery': pedidos_delivery,
+        'delivery_pendientes': delivery_pendientes,
         'ventas_por_parte': ventas_por_parte,
-        'partes_populares': partes_populares,
+        'tickets_no_pagados': tickets_no_pagados,
+        'partes_populares': partes_populares
     }
     return render(request, 'polladas/reportes.html', context)
 

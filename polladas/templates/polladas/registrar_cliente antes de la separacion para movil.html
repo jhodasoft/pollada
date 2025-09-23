@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Cliente</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            padding: 20px; 
+            background-color: #f0f0f0; 
+        }
+        form { 
+            max-width: 400px; 
+            margin: auto; 
+            padding: 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 8px; 
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        input[type="text"] { 
+            width: 100%; 
+            padding: 8px; 
+            margin: 10px 0; 
+            box-sizing: border-box; 
+        }
+        button { 
+            background-color: #4CAF50; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            cursor: pointer; 
+            width: 100%;
+        }
+        h2 { 
+            text-align: center;
+        }
+        /* Estilo para el contenedor de los campos de delivery */
+        .delivery-fields {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Ingresa tus datos para comprar tu ticket</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.nombre.label_tag }}
+        {{ form.nombre }}
+        
+        {{ form.telefono.label_tag }}
+        {{ form.telefono }}
+
+        <br>
+        {{ form.tipo_pedido.label_tag }}
+        {{ form.tipo_pedido }}
+
+        <div id="delivery-fields" class="delivery-fields" style="display: none;">
+            {{ form.direccion.label_tag }}
+            {{ form.direccion }}
+
+            {{ form.referencia.label_tag }}
+            {{ form.referencia }}
+        </div>
+        
+        <button type="submit">Siguiente</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const tipoPedidoRadios = document.querySelectorAll('input[name="tipo_pedido"]');
+            const deliveryFields = document.getElementById('delivery-fields');
+
+            // Función para mostrar/ocultar los campos
+            function toggleDeliveryFields() {
+                const selectedValue = document.querySelector('input[name="tipo_pedido"]:checked').value;
+                if (selectedValue === 'delivery') {
+                    deliveryFields.style.display = 'block';
+                } else {
+                    deliveryFields.style.display = 'none';
+                }
+            }
+
+            // Agrega un evento 'change' a cada botón de radio
+            tipoPedidoRadios.forEach(radio => {
+                radio.addEventListener('change', toggleDeliveryFields);
+            });
+
+            // Llama a la función al cargar la página para el caso de que la opción 'delivery' esté seleccionada
+            toggleDeliveryFields();
+        });
+    </script>
+</body>
+</html>

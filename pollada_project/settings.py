@@ -24,10 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wl^a2-dzp#ut1kmwg9kv*^-!d)3oeh4spx@45u#)e9p_3p-#43'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True #para desarrollo
-DEBUG = os.environ.get('DEBUG', 'False') == 'True' #para produccion
+DEBUG = True #para desarrollo
+#DEBUG = os.environ.get('DEBUG', 'False') == 'True' #para produccion
 
 ALLOWED_HOSTS = ['pollada-production.up.railway.app']
+
+# Para trabajar en local: si DEBUG es True, añade los hosts locales.
+if DEBUG:
+    ALLOWED_HOSTS += ['127.0.0.1', 'localhost']
+# ...
 
 
 # Application definition

@@ -1,21 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reportes de Pollada</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; background-color: #f0f0f0; }
-        .container { max-width: 800px; margin: auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1, h2 { text-align: center; color: #333; }
-        .summary-cards { display: flex; justify-content: space-around; flex-wrap: wrap; margin-bottom: 20px; }
-        .card { background-color: #e9ecef; padding: 15px; border-radius: 5px; text-align: center; width: 45%; margin: 10px 0; }
-        .card h3 { margin-top: 0; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #007bff; color: white; }
-        .popular-list { text-align: left; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/reports_styles.css' %}">
 </head>
 <body>
     <div class="container">
@@ -24,24 +15,61 @@
         <div class="summary-cards">
             <div class="card">
                 <h3>Dinero Recaudado</h3>
-                <p style="font-size: 2em; margin: 5px 0;">S/ {{ dinero_recaudado }}</p>
+                <p>S/ {{ dinero_recaudado }}</p>
             </div>
             <div class="card">
                 <h3>Dinero Pendiente</h3>
-                <p style="font-size: 2em; margin: 5px 0;">S/ {{ dinero_pendiente }}</p>
+                <p>S/ {{ dinero_pendiente }}</p>
             </div>
-        </div>
-
-        <div class="summary-cards">
             <div class="card">
                 <h3>Tickets Vendidos</h3>
-                <p style="font-size: 2em; margin: 5px 0;">{{ tickets_vendidos }}</p>
+                <p>{{ tickets_vendidos }}</p>
             </div>
             <div class="card">
                 <h3>Tickets Canjeados</h3>
-                <p style="font-size: 2em; margin: 5px 0;">{{ tickets_canjeados }}</p>
+                <p>{{ tickets_canjeados }}</p>
+            </div>
+            <div class="card">
+                <h3>Pedidos de Delivery</h3>
+                <p>{{ pedidos_delivery }}</p>
             </div>
         </div>
+        
+        <div class="delivery-section">
+            <button class="toggle-button" onclick="toggleDeliveryList()">Ver pedidos de Delivery pendientes</button>
+        </div>
+
+        <div id="delivery-list" style="display: none;">
+            <h2>Pedidos de Delivery Pendientes de Canje</h2>
+            {% if delivery_pendientes %}
+            <table class="delivery-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Teléfono</th>
+                        <th>Parte del Pollo</th>
+                        <th>Dirección</th>
+                        <th>Referencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in delivery_pendientes %}
+                    <tr>
+                        <td data-label="Cliente">{{ ticket.cliente.nombre }}</td>
+                        <td data-label="Teléfono">{{ ticket.cliente.telefono }}</td>
+                        <td data-label="Parte del Pollo">{{ ticket.parte_pollo.nombre }}</td>
+                        <td data-label="Dirección">{{ ticket.cliente.direccion }}</td>
+                        <td data-label="Referencia">{{ ticket.cliente.referencia }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="empty-message">No hay pedidos de Delivery pendientes de canje.</p>
+            {% endif %}
+        </div>
+        
+        <hr>
 
         <h2>Ventas por Parte del Pollo</h2>
         <table>
@@ -61,9 +89,11 @@
             </tbody>
         </table>
 
+        <hr>
+
         <h2>Tickets Pendientes de Pago</h2>
         {% if tickets_no_pagados %}
-        <table>
+        <table class="payment-table">
             <thead>
                 <tr>
                     <th>Cliente</th>
@@ -76,11 +106,11 @@
             <tbody>
                 {% for ticket in tickets_no_pagados %}
                 <tr>
-                    <td>{{ ticket.cliente.nombre }}</td>
-                    <td>{{ ticket.cliente.telefono }}</td>
-                    <td>{{ ticket.parte_pollo.nombre }}</td>
-                    <td>{{ ticket.codigo }}</td>
-                    <td>
+                    <td data-label="Cliente">{{ ticket.cliente.nombre }}</td>
+                    <td data-label="Teléfono">{{ ticket.cliente.telefono }}</td>
+                    <td data-label="Parte del Pollo">{{ ticket.parte_pollo.nombre }}</td>
+                    <td data-label="Código">{{ ticket.codigo }}</td>
+                    <td data-label="Acción">
                         <a href="{% url 'mostrar_ticket' codigo=ticket.codigo %}">Ver Ticket</a>
                     </td>
                 </tr>
@@ -88,17 +118,21 @@
             </tbody>
         </table>
         {% else %}
-        <p>¡No hay tickets pendientes de pago!</p>
+        <p class="empty-message">¡No hay tickets pendientes de pago!</p>
         {% endif %}
+
+        <hr>
 
         <h2>Partes Más Populares</h2>
         <ul class="popular-list">
             {% for parte in partes_populares %}
-            <li>{{ forloop.counter }}. {{ parte.nombre }} ({{ parte.total_vendido }} ventas)</li>
+            <li>{{ forloop.counter }}. <strong>{{ parte.nombre }}</strong> ({{ parte.total_vendido }} ventas)</li>
             {% empty %}
-            <li>Aún no hay ventas registradas.</li>
+            <p class="empty-message">Aún no hay ventas registradas.</p>
             {% endfor %}
         </ul>
     </div>
+
+    <script src="{% static 'js/reports_scripts.js' %}"></script>
 </body>
 </html>

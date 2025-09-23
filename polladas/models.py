@@ -9,10 +9,19 @@ class ParteDelPollo(models.Model):
     def __str__(self):
         return self.nombre
 
+from django.db import models
+
 class Cliente(models.Model):
+    TIPO_PEDIDO_CHOICES = [
+        ('recojo', 'Recojo en local'),
+        ('delivery', 'Delivery'),
+    ]
+
     nombre = models.CharField(max_length=100)
     telefono = models.CharField(max_length=20, unique=True)
-    # El telefono sera unico para cada cliente
+    tipo_pedido = models.CharField(max_length=10, choices=TIPO_PEDIDO_CHOICES, default='recojo')
+    direccion = models.CharField(max_length=255, blank=True, null=True)
+    referencia = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.nombre

@@ -1,19 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscar Tickets</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; text-align: center; background-color: #f0f0f0; }
-        .container { max-width: 800px; margin: auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; font-size: 1.2em; text-align: center; }
-        button { background-color: #007bff; color: white; padding: 12px 20px; border: none; cursor: pointer; border-radius: 5px; width: 100%; font-size: 1.1em; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        a { text-decoration: none; color: #007bff; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/search_styles.css' %}">
 </head>
 <body>
     <div class="container">
@@ -24,10 +17,10 @@
         </form>
 
         {% if query and not tickets %}
-        <p>No se encontraron tickets para la búsqueda "{{ query }}".</p>
+        <p class="no-results">No se encontraron tickets para la búsqueda "{{ query }}".</p>
         {% elif tickets %}
         <h3>Resultados de la búsqueda: "{{ query }}"</h3>
-        <table>
+        <table class="results-table">
             <thead>
                 <tr>
                     <th>Código</th>

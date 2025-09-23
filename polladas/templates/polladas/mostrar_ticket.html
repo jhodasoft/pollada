@@ -1,64 +1,83 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Ticket</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; text-align: center; }
-        .ticket-container { max-width: 400px; margin: auto; padding: 20px; border: 2px dashed #333; border-radius: 8px; }
-        h1 { color: #4CAF50; }
-        p { font-size: 1.2em; }
-        .codigo { font-size: 2em; font-weight: bold; margin: 20px 0; color: #D9534F; }
-        #qr-code img { max-width: 100%; height: auto; display: block; margin: 20px auto; }
-        .actions-container button { 
-            display: block; 
-            width: 100%; 
-            padding: 10px; 
-            margin: 10px 0; 
-            background-color: #4CAF50; 
-            color: white; 
-            border: none; 
-            border-radius: 5px; 
-            cursor: pointer; 
-        }
-        .actions-container .secondary-btn {
-            background-color: #f44336;
-        }
-    </style>
+    <title>Tu Ticket de Pollada</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="ticket-container">
-        <h1>¡Ticket de Pollada!</h1>
-        <p>Cliente: {{ ticket.cliente.nombre }}</p>
-        <p>Parte del Pollo: {{ ticket.parte_pollo.nombre }}</p>
-        <p>Tu código de canje es:</p>
-        <div class="codigo">{{ ticket.codigo }}</div>
-
-        <div id="qr-code">
-            <img src="data:image/png;base64,{{ qr_data }}" alt="Código QR del ticket">
+        <div class="left-strip">
+            <span>T</span>
+            <span>E</span>
+            <br>
+            <span>E</span>
+            <span>S</span>
+            <span>P</span>
+            <span>E</span>
+            <span>R</span>
+            <span>A</span>
+            <span>M</span>
+            <span>O</span>
+            <span>S</span>
         </div>
-        
-        <p>¡Gracias por tu compra!</p>
-    </div>
-    
-    <div class="actions-container">
-        <button onclick="downloadTicket()">Descargar Ticket</button>
-        <button onclick="window.location.href='{% url 'registrar_cliente' %}'">Pedir otro Ticket</button>
-        <button class="secondary-btn" onclick="window.location.href='about:blank'">Salir</button>
-    </div>
+        <div class="right-content">
+            <img src="{% static 'img/palmera.png' %}" alt="Marca de agua de palmera" class="watermark">
 
-    <script>
-        // Función para descargar la imagen del ticket (código QR y datos)
-        function downloadTicket() {
-            html2canvas(document.querySelector(".ticket-container")).then(canvas => {
-                var link = document.createElement('a');
-                link.download = 'ticket_pollada.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+            <div class="wave-shape"></div>
+
+            <svg class="decoration-svg star-1" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.6722 2.04308C12.5459 1.78707 12.2851 1.625 11.9996 1.625C11.7142 1.625 11.4534 1.78707 11.3271 2.04308L8.67288 7.4211L2.73788 8.28351C2.45536 8.32456 2.22065 8.52244 2.13243 8.79395C2.04421 9.06546 2.11779 9.36351 2.32222 9.56278L6.61682 13.749L5.603 19.66C5.55475 19.9414 5.67041 20.2257 5.90137 20.3936C6.13233 20.5614 6.43853 20.5835 6.69122 20.4506L11.9996 17.6598L17.3081 20.4506C17.5608 20.5835 17.867 20.5614 18.0979 20.3936C18.3289 20.2257 18.4445 19.9414 18.3963 19.66L17.3825 13.749L21.6771 9.56278C21.8815 9.36351 21.9551 9.06546 21.8669 8.79395C21.7786 8.52244 21.5439 8.32456 21.2614 8.28351L15.3264 7.4211L12.6722 2.04308Z"/>
+            </svg>
+            <svg class="decoration-svg star-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.6722 2.04308C12.5459 1.78707 12.2851 1.625 11.9996 1.625C11.7142 1.625 11.4534 1.78707 11.3271 2.04308L8.67288 7.4211L2.73788 8.28351C2.45536 8.32456 2.22065 8.52244 2.13243 8.79395C2.04421 9.06546 2.11779 9.36351 2.32222 9.56278L6.61682 13.749L5.603 19.66C5.55475 19.9414 5.67041 20.2257 5.90137 20.3936C6.13233 20.5614 6.43853 20.5835 6.69122 20.4506L11.9996 17.6598L17.3081 20.4506C17.5608 20.5835 17.867 20.5614 18.0979 20.3936C18.3289 20.2257 18.4445 19.9414 18.3963 19.66L17.3825 13.749L21.6771 9.56278C21.8815 9.36351 21.9551 9.06546 21.8669 8.79395C21.7786 8.52244 21.5439 8.32456 21.2614 8.28351L15.3264 7.4211L12.6722 2.04308Z"/>
+            </svg>
+            <svg class="decoration-svg star-3" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.6722 2.04308C12.5459 1.78707 12.2851 1.625 11.9996 1.625C11.7142 1.625 11.4534 1.78707 11.3271 2.04308L8.67288 7.4211L2.73788 8.28351C2.45536 8.32456 2.22065 8.52244 2.13243 8.79395C2.04421 9.06546 2.11779 9.36351 2.32222 9.56278L6.61682 13.749L5.603 19.66C5.55475 19.9414 5.67041 20.2257 5.90137 20.3936C6.13233 20.5614 6.43853 20.5835 6.69122 20.4506L11.9996 17.6598L17.3081 20.4506C17.5608 20.5835 17.867 20.5614 18.0979 20.3936C18.3289 20.2257 18.4445 19.9414 18.3963 19.66L17.3825 13.749L21.6771 9.56278C21.8815 9.36351 21.9551 9.06546 21.8669 8.79395C21.7786 8.52244 21.5439 8.32456 21.2614 8.28351L15.3264 7.4211L12.6722 2.04308Z"/>
+            </svg>
+            <svg class="decoration-svg star-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.6722 2.04308C12.5459 1.78707 12.2851 1.625 11.9996 1.625C11.7142 1.625 11.4534 1.78707 11.3271 2.04308L8.67288 7.4211L2.73788 8.28351C2.45536 8.32456 2.22065 8.52244 2.13243 8.79395C2.04421 9.06546 2.11779 9.36351 2.32222 9.56278L6.61682 13.749L5.603 19.66C5.55475 19.9414 5.67041 20.2257 5.90137 20.3936C6.13233 20.5614 6.43853 20.5835 6.69122 20.4506L11.9996 17.6598L17.3081 20.4506C17.5608 20.5835 17.867 20.5614 18.0979 20.3936C18.3289 20.2257 18.4445 19.9414 18.3963 19.66L17.3825 13.749L21.6771 9.56278C21.8815 9.36351 21.9551 9.06546 21.8669 8.79395C21.7786 8.52244 21.5439 8.32456 21.2614 8.28351L15.3264 7.4211L12.6722 2.04308Z"/>
+            </svg>
+            
+            <svg class="decoration-svg note-1" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.25 4.00001C21.25 3.77689 21.1507 3.56536 20.979 3.42287C20.8073 3.28039 20.5811 3.22173 20.3618 3.26285L8.36178 5.51285C8.00705 5.57936 7.75 5.88909 7.75 6.25001V9.98484C7.74982 9.99437 7.74982 10.0039 7.75 10.0135V14.4585C7.20497 14.1636 6.55664 14 5.875 14C5.00075 14 4.18131 14.2691 3.56431 14.7392C2.9467 15.2098 2.5 15.9138 2.5 16.75C2.5 17.5862 2.9467 18.2902 3.56431 18.7608C4.18131 19.2309 5.00075 19.5 5.875 19.5C6.74925 19.5 7.56869 19.2309 8.18569 18.7608C8.79111 18.2995 9.2323 17.6139 9.24948 16.7993C9.24983 16.79 9.25 16.7806 9.25 16.7712V10.62L19.75 8.60938V12.2085C19.205 11.9136 18.5566 11.75 17.875 11.75C17.0008 11.75 16.1813 12.0191 15.5643 12.4892C14.9467 12.9598 14.5 13.6638 14.5 14.5C14.5 15.3362 14.9467 16.0402 15.5643 16.5108C16.1813 16.9809 17.0008 17.25 17.875 17.25C18.7492 17.25 19.5687 16.9809 20.1857 16.5108C20.7911 16.0495 21.2323 15.3639 21.2495 14.5493C21.2498 14.54 21.25 14.5306 21.25 14.5212V4.00001Z"/>
+            </svg>
+            <svg class="decoration-svg note-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.25 4.00001C21.25 3.77689 21.1507 3.56536 20.979 3.42287C20.8073 3.28039 20.5811 3.22173 20.3618 3.26285L8.36178 5.51285C8.00705 5.57936 7.75 5.88909 7.75 6.25001V9.98484C7.74982 9.99437 7.74982 10.0039 7.75 10.0135V14.4585C7.20497 14.1636 6.55664 14 5.875 14C5.00075 14 4.18131 14.2691 3.56431 14.7392C2.9467 15.2098 2.5 15.9138 2.5 16.75C2.5 17.5862 2.9467 18.2902 3.56431 18.7608C4.18131 19.2309 5.00075 19.5 5.875 19.5C6.74925 19.5 7.56869 19.2309 8.18569 18.7608C8.79111 18.2995 9.2323 17.6139 9.24948 16.7993C9.24983 16.79 9.25 16.7806 9.25 16.7712V10.62L19.75 8.60938V12.2085C19.205 11.9136 18.5566 11.75 17.875 11.75C17.0008 11.75 16.1813 12.0191 15.5643 12.4892C14.9467 12.9598 14.5 13.6638 14.5 14.5C14.5 15.3362 14.9467 16.0402 15.5643 16.5108C16.1813 16.9809 17.0008 17.25 17.875 17.25C18.7492 17.25 19.5687 16.9809 20.1857 16.5108C20.7911 16.0495 21.2323 15.3639 21.2495 14.5493C21.2498 14.54 21.25 14.5306 21.25 14.5212V4.00001Z"/>
+            </svg>
+            <svg class="decoration-svg note-3" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.25 4.00001C21.25 3.77689 21.1507 3.56536 20.979 3.42287C20.8073 3.28039 20.5811 3.22173 20.3618 3.26285L8.36178 5.51285C8.00705 5.57936 7.75 5.88909 7.75 6.25001V9.98484C7.74982 9.99437 7.74982 10.0039 7.75 10.0135V14.4585C7.20497 14.1636 6.55664 14 5.875 14C5.00075 14 4.18131 14.2691 3.56431 14.7392C2.9467 15.2098 2.5 15.9138 2.5 16.75C2.5 17.5862 2.9467 18.2902 3.56431 18.7608C4.18131 19.2309 5.00075 19.5 5.875 19.5C6.74925 19.5 7.56869 19.2309 8.18569 18.7608C8.79111 18.2995 9.2323 17.6139 9.24948 16.7993C9.24983 16.79 9.25 16.7806 9.25 16.7712V10.62L19.75 8.60938V12.2085C19.205 11.9136 18.5566 11.75 17.875 11.75C17.0008 11.75 16.1813 12.0191 15.5643 12.4892C14.9467 12.9598 14.5 13.6638 14.5 14.5C14.5 15.3362 14.9467 16.0402 15.5643 16.5108C16.1813 16.9809 17.0008 17.25 17.875 17.25C18.7492 17.25 19.5687 16.9809 20.1857 16.5108C20.7911 16.0495 21.2323 15.3639 21.2495 14.5493C21.2498 14.54 21.25 14.5306 21.25 14.5212V4.00001Z"/>
+            </svg>
+            
+            <div class="header">
+                <img src="{% static 'img/titulo_pollada.png' %}" alt="GRAN POLLADA" class="title-image">
+            </div>
+            
+            <div class="event-info">
+                <p>Organiza: <span class="highlight">FAMILIA SILVA TELLO</span></p>
+                <p>Invitamos a Ud. <span class="highlight">{{ ticket.cliente.nombre }}</span> y su familia.</p>
+                <p>A realizarse el día: <span class="highlight">27-09-2025</span> Hora: <span class="highlight">12M</span></p>
+                <p>Lugar: <span class="highlight">"CALLE LOS NOGALES 268 - PRIMAVERA - SAN JUAN BAUTISTA"</span></p>
+                
+                <p><strong>Ración:</strong> {{ ticket.parte_pollo.nombre }}</p>
+            </div>
+
+            <div class="details-section">
+                <div class="price-label-container">
+                    <img src="{% static 'img/rotulo_precio.png' %}" alt="Rótulo de precio">
+                    <span><small>S/ </small>{{ ticket.parte_pollo.precio }}</span>
+                </div>
+                <div class="qr-code">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Calle+Los+Nogales+268+-+San+Juan+Bautista" target="_blank" class="location-icon">
+                        <img src="{% static 'img/ubicacion.png' %}" alt="Ubicación">
+                    </a>
+                    <img src="data:image/png;base64,{{ qr_data }}" alt="Código QR de tu ticket">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

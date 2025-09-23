@@ -1,49 +1,51 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Cliente</title>
-    <style>
-        body { 
-            font-family: sans-serif; 
-            padding: 20px; 
-            background-color: #f0f0f0; 
-        }
-        form { 
-            max-width: 400px; 
-            margin: auto; 
-            padding: 20px; 
-            border: 1px solid #ccc; 
-            border-radius: 8px; 
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        input[type="text"] { 
-            width: 100%; 
-            padding: 8px; 
-            margin: 10px 0; 
-            box-sizing: border-box; 
-        }
-        button { 
-            background-color: #4CAF50; 
-            color: white; 
-            padding: 10px 15px; 
-            border: none; 
-            cursor: pointer; 
-            width: 100%;
-        }
-        h2 { 
-            text-align: center; /* <-- Esto centra el texto */
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/form_styles.css' %}">
 </head>
 <body>
-    <h2>Ingresa tus datos para comprar tu ticket</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Siguiente</button>
-    </form>
+    <div class="form-container">
+        <h2>Ingresa tus datos para comprar tu ticket</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- <label for="{{ form.nombre.id_for_label }}">{{ form.nombre.label }}</label>
+            {{ form.nombre }}
+            
+            <label for="{{ form.telefono.id_for_label }}">{{ form.telefono.label }}</label>
+            {{ form.telefono }} -->
+
+            <label for="{{ form.nombre.id_for_label }}">{{ form.nombre.label }}</label>
+            {{ form.nombre }}
+            <label for="{{ form.telefono.id_for_label }}">{{ form.telefono.label }}</label>
+            <input type="tel" name="{{ form.telefono.name }}" id="{{ form.telefono.id_for_label }}"
+                placeholder="Ej. 912345678"
+                pattern="[0-9]{9}"
+                title="El número de teléfono debe tener 9 dígitos."
+                required>
+
+            <div class="radio-group">
+                <label>{{ form.tipo_pedido.label }}</label>
+                {{ form.tipo_pedido }}
+            </div>
+
+            <div id="delivery-fields" class="delivery-fields" style="display: none;">
+                <label for="{{ form.direccion.id_for_label }}">{{ form.direccion.label }}</label>
+                {{ form.direccion }}
+
+                <label for="{{ form.referencia.id_for_label }}">{{ form.referencia.label }}</label>
+                {{ form.referencia }}
+            </div>
+            
+            <button type="submit">Siguiente</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/form_scripts.js' %}"></script>
 </body>
 </html>

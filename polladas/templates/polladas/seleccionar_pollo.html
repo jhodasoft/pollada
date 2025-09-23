@@ -1,32 +1,29 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seleccionar Pollo</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; text-align: center; }
-        form { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-        h2, h3 { color: #333; }
-        ul { list-style: none; padding: 0; }
-        li { margin: 10px 0; }
-        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; cursor: pointer; width: 100%; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/selection_styles.css' %}">
 </head>
 <body>
-    <h2>Hola, {{ cliente.nombre }}</h2>
-    <h3>Selecciona la parte de tu pollo:</h3>
-    <form method="post">
-        {% csrf_token %}
-        <ul>
-            {% for parte in partes_disponibles %}
-            <li>
-                <button type="submit" name="parte_pollo" value="{{ parte.id }}">
-                    {{ parte.nombre }} ({{ parte.cantidad_disponible }} disponibles)
-                </button>
-            </li>
-            {% endfor %}
-        </ul>
-    </form>
+    <div class="selection-container">
+        <h2>Hola, {{ cliente.nombre }}</h2>
+        <h3>Selecciona la parte de tu pollo:</h3>
+        <form method="post">
+            {% csrf_token %}
+            <ul class="partes-list">
+                {% for parte in partes_disponibles %}
+                <li>
+                    <button type="submit" name="parte_pollo" value="{{ parte.id }}" {% if parte.cantidad_disponible <= 0 %}disabled{% endif %}>
+                        {{ parte.nombre }} ({{ parte.cantidad_disponible }} disponibles)
+                    </button>
+                </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
 </body>
 </html>
