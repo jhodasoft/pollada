@@ -1,0 +1,152 @@
+/* --- Base Styles --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 20px;
+    background-color: #f7f9fc;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinea al inicio de la página */
+    min-height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 50px; /* Margen superior para centrar verticalmente */
+}
+
+/* Encabezados */
+h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+h3 {
+    text-align: center;
+    color: #555;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+/* Formulario de búsqueda */
+form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+    text-align: left;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Tabla de resultados */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+.results-table th,
+.results-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e1e4e8;
+}
+
+.results-table thead th {
+    background-color: #f7f9fc;
+    font-weight: 600;
+    color: #555;
+}
+
+.results-table tbody tr:hover {
+    background-color: #f0f8ff;
+}
+
+/* Enlaces de acción */
+.results-table a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.results-table a:hover {
+    color: #0056b3;
+}
+
+/* Mensajes de "no se encontraron resultados" */
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}
+
+/* Responsividad para móviles */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    form {
+        flex-direction: column;
+        gap: 0;
+    }
+    input[type="text"] {
+        margin-bottom: 10px;
+    }
+    .results-table {
+        font-size: 0.8em;
+    }
+    .results-table th,
+    .results-table td {
+        padding: 8px 10px;
+    }
+    .results-table th:nth-child(2),
+    .results-table td:nth-child(2),
+    .results-table th:nth-child(3),
+    .results-table td:nth-child(3) {
+        display: none; /* Oculta columnas en móviles para mejorar la legibilidad */
+    }
+}

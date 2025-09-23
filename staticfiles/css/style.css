@@ -1,0 +1,329 @@
+/* --- Base Styles --- */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box; /* Asegura que el padding no cause overflow */
+}
+
+.ticket-container {
+    width: 700px; /* Ancho fijo para escritorio */
+    min-height: 350px;
+    background: linear-gradient(to bottom, #e0f2f7, #c1e7f0);
+    border: 5px solid #ff4500;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+.left-strip {
+    width: 50px;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    letter-spacing: 5px;
+    padding: 10px 0;
+    text-align: center;
+    flex-shrink: 0; /* Evita que se encoja en pantallas pequeñas */
+}
+
+.left-strip span {
+    line-height: 1.2;
+    white-space: pre;
+}
+
+.right-content {
+    flex: 1;
+    padding: 15px;
+    text-align: left;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    overflow: hidden; /* Asegura que la marca de agua y otros elementos no se salgan */
+}
+
+.header {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.header .title-image {
+    max-width: 90%; /* Limita el ancho para que no desborde */
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.event-info {
+    font-size: 1.1em;
+    color: #171d63;
+    line-height: 1.6;
+    margin-top: -10px;
+    font-weight: bold;
+}
+
+.event-info .highlight {
+    font-weight: bold;
+    color: #171d63;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+.details-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 20px;
+    flex-wrap: nowrap; /* Evita que los elementos se envuelvan a una nueva línea si hay espacio */
+}
+
+.price-label-container {
+    position: relative;
+    width: 160px; /* Tamaño fijo para escritorio */
+    height: 160px;
+    flex-shrink: 0; /* Evita que se encoja */
+}
+
+.price-label-container img {
+    width: 100%;
+    height: auto;
+    display: block; /* Asegura que no haya espacio extra */
+}
+
+.price-label-container span {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #d82c2c;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    white-space: nowrap; /* Evita que el precio se rompa */
+}
+
+.price-label-container span small {
+    font-size: 0.6em;
+}
+
+.qr-code {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0; /* Evita que se encoja */
+}
+
+.qr-code img {
+    max-width: 120px; /* Limita el ancho del QR */
+    height: auto;
+    border: 2px solid #333;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.location-icon {
+    position: absolute;
+    left: -140px; /* Posición para escritorio */
+    z-index: 10;
+    display: block; /* Asegura que el enlace se comporte como bloque */
+}
+
+.location-icon img {
+    width: 120px; /* Tamaño fijo para escritorio */
+    height: auto;
+    border: none;
+    cursor: pointer;
+    display: block;
+}
+
+/* ESTILOS ADICIONALES PARA LA MARCA DE AGUA Y OLA */
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 0%; /* Asegúrate de que esto sea correcto para la palmera */
+    transform: translateY(-50%);
+    width: 40%; /* Tamaño para escritorio */
+    height: auto;
+    opacity: 0.15;
+    z-index: 1;
+    pointer-events: none; /* Permite clics a través de la imagen */
+}
+
+.wave-shape {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to top, #b6ecc8, #d9f7d4);
+    z-index: 0;
+    clip-path: ellipse(100% 100% at 30% 100%);
+}
+
+/* ESTILOS DE LOS ELEMENTOS EMBEBIDOS (ESTRELLAS Y NOTAS) */
+.decoration-svg {
+    position: absolute;
+    z-index: 2;
+    /* Estilos de tamaño y color específicos para cada SVG */
+}
+
+.star-1 { top: 20px; left: 10%; width: 30px; height: 30px; color: #f0e68c; transform: rotate(15deg); }
+.star-2 { top: 150px; left: 70%; width: 25px; height: 25px; color: #add8e6; transform: rotate(-30deg); }
+.star-3 { bottom: 170px; left: 25%; width: 35px; height: 35px; color: #ffe4e1; transform: rotate(45deg); }
+.star-4 { top: 25px; right: 5%; width: 20px; height: 20px; color: #ffdab9; transform: rotate(-10deg); }
+.note-1 { top: 100px; right: 30%; width: 35px; height: 35px; color: #dda0dd; transform: rotate(20deg); }
+.note-2 { top: 150px; left: 55%; width: 40px; height: 40px; color: #98fb98; transform: rotate(-25deg); }
+.note-3 { bottom: 200px; right: 40%; width: 30px; height: 30px; color: #b0e0e6; transform: rotate(35deg); }
+
+
+/* --- Media Queries for Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    body {
+        padding: 10px; /* Menos padding en pantallas pequeñas */
+        align-items: flex-start; /* Alinea al inicio para no centrar verticalmente si el contenido es largo */
+    }
+
+    .ticket-container {
+        flex-direction: column; /* Columna para el diseño móvil */
+        width: 100%; /* Ocupa todo el ancho disponible */
+        max-width: 350px; /* Máximo ancho para no ser demasiado grande en tabletas verticales */
+        min-height: auto; /* Altura automática */
+        border-radius: 10px;
+        padding: 0; /* El padding se manejará en right-content */
+    }
+
+    .left-strip {
+        width: 100%;
+        height: 40px; /* Altura reducida */
+        flex-direction: row; /* Texto en una fila */
+        font-size: 1.1em;
+        letter-spacing: 2px;
+        justify-content: center;
+        padding: 5px 0;
+    }
+
+    .left-strip br {
+        display: none; /* Oculta el salto de línea */
+    }
+
+    .left-strip span {
+        white-space: nowrap; /* Evita que las letras se rompan */
+        margin: 0 3px; /* Espacio reducido entre letras */
+    }
+
+    .right-content {
+        padding: 10px;
+        align-items: center; /* Centra el contenido horizontalmente */
+    }
+
+    .header .title-image {
+        max-width: 80%; /* Reduce el tamaño del título */
+        margin-bottom: 15px;
+        margin-top: 5px;
+    }
+
+    .event-info {
+        font-size: 0.9em;
+        line-height: 1.4;
+        text-align: center; /* Centra el texto de la información del evento */
+    }
+
+    .details-section {
+        flex-direction: column; /* Apila elementos en columna */
+        align-items: center; /* Centra horizontalmente */
+        margin-top: 15px;
+    }
+
+    .price-label-container {
+        width: 100px; /* Tamaño más pequeño para el rótulo de precio */
+        height: 100px;
+        margin-bottom: 15px;
+    }
+
+    .price-label-container span {
+        font-size: 1.2em; /* Reduce el tamaño de la fuente del precio */
+    }
+
+    .qr-code {
+        margin-bottom: 0; /* Elimina margen inferior extra */
+    }
+
+    .qr-code img {
+        max-width: 90px; /* Reduce el tamaño del QR */
+        margin-bottom: 8px;
+        border-width: 1px; /* Borde más fino */
+    }
+
+    .location-icon {
+        position: static; /* Vuelve a la posición normal del flujo */
+        left: auto;
+        margin-top: 5px; /* Pequeño margen superior para separar */
+        text-align: center;
+    }
+
+    .location-icon img {
+        width: 70px; /* Reduce el tamaño del icono de ubicación */
+    }
+
+    /* Oculta los elementos decorativos en móviles */
+    .decoration-svg,
+    .watermark,
+    .wave-shape {
+        display: none;
+    }
+}
+
+/* Ajustes para pantallas aún más pequeñas (ej. iPhone SE) */
+@media (max-width: 380px) {
+    .ticket-container {
+        max-width: 300px;
+    }
+
+    .left-strip {
+        font-size: 1em;
+        letter-spacing: 1px;
+    }
+
+    .header .title-image {
+        max-width: 75%;
+    }
+
+    .event-info {
+        font-size: 0.85em;
+    }
+
+    .price-label-container {
+        width: 80px;
+        height: 80px;
+    }
+
+    .price-label-container span {
+        font-size: 1em;
+    }
+
+    .qr-code img {
+        max-width: 70px;
+    }
+
+    .location-icon img {
+        width: 60px;
+    }
+}

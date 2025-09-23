@@ -1,0 +1,93 @@
+/* --- Base Styles --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f7f9fc; /* Fondo claro */
+    color: #333;
+}
+
+.panel-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Título principal */
+h1 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 35px;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+/* Contenedor de botones */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo base de los botones */
+.button {
+    display: block;
+    padding: 15px 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Colores específicos para cada botón */
+.primary {
+    background-color: #007bff;
+}
+.primary:hover {
+    background-color: #0069d9;
+}
+
+.success {
+    background-color: #28a745;
+}
+.success:hover {
+    background-color: #218838;
+}
+
+.secondary {
+    background-color: #6c757d;
+}
+.secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Responsive design para móviles */
+@media (max-width: 600px) {
+    .panel-container {
+        padding: 30px;
+        margin: 20px;
+    }
+    h1 {
+        font-size: 1.5em;
+        margin-bottom: 25px;
+    }
+    .button {
+        padding: 12px 15px;
+        font-size: 1em;
+    }
+}
