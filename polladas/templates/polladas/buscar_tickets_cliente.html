@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <h2>Buscar Tickets por Cliente</h2>
-        <form method="get" action="{% url 'buscar_tickets_cliente' %}">
+        <form method="get" action="{% url 'polladas:buscar_tickets_cliente' %}">
             <input type="text" name="q" placeholder="Buscar por nombre o teléfono" value="{{ query }}">
             <button type="submit">Buscar</button>
         </form>
@@ -41,7 +41,7 @@
                     <td>{{ ticket.parte_pollo.nombre }}</td>
                     <td>{% if ticket.pagado %}✔️{% else %}❌{% endif %}</td>
                     <td>{% if ticket.canjeado %}✔️{% else %}❌{% endif %}</td>
-                    <td><a href="{% url 'mostrar_ticket' codigo=ticket.codigo %}">Ver/Descargar</a></td>
+                    <td><a href="{% url 'polladas:mostrar_ticket' codigo=ticket.codigo %}">Ver/Descargar</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

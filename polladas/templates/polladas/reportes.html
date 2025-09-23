@@ -111,7 +111,7 @@
                     <td data-label="Parte del Pollo">{{ ticket.parte_pollo.nombre }}</td>
                     <td data-label="Código">{{ ticket.codigo }}</td>
                     <td data-label="Acción">
-                        <a href="{% url 'mostrar_ticket' codigo=ticket.codigo %}">Ver Ticket</a>
+                        <a href="{% url 'polladas:mostrar_ticket' codigo=ticket.codigo %}">Ver Ticket</a>
                     </td>
                 </tr>
                 {% endfor %}
