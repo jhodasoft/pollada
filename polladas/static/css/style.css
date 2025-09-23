@@ -9,6 +9,8 @@ body {
     margin: 0;
     padding: 20px;
     box-sizing: border-box; /* Asegura que el padding no cause overflow */
+    /* Esta es la propiedad que debes añadir o modificar */
+    flex-direction: column; 
 }
 
 .ticket-container {
@@ -191,7 +193,7 @@ body {
 .star-4 { top: 25px; right: 5%; width: 20px; height: 20px; color: #ffdab9; transform: rotate(-10deg); }
 .note-1 { top: 100px; right: 30%; width: 35px; height: 35px; color: #dda0dd; transform: rotate(20deg); }
 .note-2 { top: 150px; left: 55%; width: 40px; height: 40px; color: #98fb98; transform: rotate(-25deg); }
-.note-3 { bottom: 200px; right: 40%; width: 30px; height: 30px; color: #b0e0e6; transform: rotate(35deg); }
+.note-3 { bottom: 250px; right: 40%; width: 30px; height: 30px; color: #b0e0e6; transform: rotate(35deg); }
 
 
 /* --- Media Queries for Mobile Responsiveness --- */
@@ -326,4 +328,49 @@ body {
     .location-icon img {
         width: 60px;
     }
+}
+
+/* --- Estilos para los botones de acción --- */
+.actions {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 15px; 
+}
+
+.actions button {
+    padding: 12px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: white;
+    /* Nuevo color para los botones principales (Descargar y Pedir) */
+    background-color: #171d63; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 250px;
+}
+
+@media (max-width: 550px) {
+    .actions button {
+        width: 100%;
+    }
+}
+
+.actions button:hover {
+    /* Color de hover más claro */
+    background-color: #3b429d;
+    transform: translateY(-2px);
+}
+
+/* Estilo para el botón secundario (Salir) */
+.secondary-btn {
+    /* Un gris neutro para una acción menos prioritaria */
+    background-color: #6c757d;
+}
+
+.secondary-btn:hover {
+    background-color: #5a6268;
 }

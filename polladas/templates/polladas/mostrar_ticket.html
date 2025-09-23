@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tu Ticket de Pollada</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/html2canvas.min.js' %}"></script>
 </head>
 <body>
     <div class="ticket-container">
@@ -62,7 +63,7 @@
                 <p>A realizarse el día: <span class="highlight">27-09-2025</span> Hora: <span class="highlight">12M</span></p>
                 <p>Lugar: <span class="highlight">"CALLE LOS NOGALES 268 - PRIMAVERA - SAN JUAN BAUTISTA"</span></p>
                 
-                <p><strong>Ración:</strong> {{ ticket.parte_pollo.nombre }}</p>
+                <!-- <p><strong>Ración:</strong> {{ ticket.parte_pollo.nombre }}</p> -->
             </div>
 
             <div class="details-section">
@@ -79,5 +80,14 @@
             </div>
         </div>
     </div>
+    
+    <div class="actions">
+        <button id="download-btn" data-client-name="{{ ticket.cliente.nombre }}">Descargar Ticket</button>
+        <button id="new-ticket-btn" data-url="{% url 'registrar_cliente' %}">Pedir otro Ticket</button>
+        <!-- <button id="exit-btn" class="secondary-btn" data-url="{% url 'panel_principal' %}">Volver al Panel Principal</button> -->
+    </div>
+    
+
+    <script src="{% static 'js/ticket_actions.js' %}"></script>
 </body>
 </html>
