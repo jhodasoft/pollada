@@ -10,12 +10,14 @@
 </head>
 <body>
     <div class="panel-container">
-        <h1>Panel de Gestión de Pollada</h1>
+        <h1>Panel de Gestión de Parrillada</h1>
         <div class="button-group">
             <a href="{% url 'polladas:registrar_cliente' %}" class="button primary">Registrar Venta</a>
-            
-            <a href="{% url 'polladas:buscar_tickets_cliente' %}" class="button primary">Buscar Tickets</a>
-            <a href="{% url 'polladas:ver_reportes' %}" class="button secondary">Ver Reportes</a>
+            <!-- Estos solo si el usuario está logueado -->
+            {% if user.is_authenticated %}
+                <a href="{% url 'polladas:buscar_tickets_cliente' %}" class="button primary">Buscar Tickets</a>
+                <a href="{% url 'polladas:ver_reportes' %}" class="button secondary">Ver Reportes</a>
+            {% endif %}
         </div>
     </div>
 </body>
