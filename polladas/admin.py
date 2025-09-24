@@ -33,8 +33,11 @@ class TicketAdmin(admin.ModelAdmin):
     readonly_fields = ('codigo',) # Para que el código del ticket no se pueda editar manualmente
 
 class ParteDelPolloAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'cantidad_disponible')
+    list_display = ('nombre', 'cantidad_disponible','precio')
 
-admin.site.register(Cliente)
+class ClienteAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'telefono', 'tipo_pedido', 'direccion', 'referencia')
+
+admin.site.register(Cliente,ClienteAdmin)
 admin.site.register(ParteDelPollo, ParteDelPolloAdmin)
 admin.site.register(Ticket, TicketAdmin)

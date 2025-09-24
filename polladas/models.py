@@ -18,7 +18,7 @@ class Cliente(models.Model):
     ]
 
     nombre = models.CharField(max_length=100)
-    telefono = models.CharField(max_length=20, unique=True)
+    telefono = models.CharField(max_length=20)#, unique=True)
     tipo_pedido = models.CharField(max_length=10, choices=TIPO_PEDIDO_CHOICES, default='recojo')
     direccion = models.CharField(max_length=255, blank=True, null=True)
     referencia = models.CharField(max_length=255, blank=True, null=True)
